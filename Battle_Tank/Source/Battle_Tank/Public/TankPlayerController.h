@@ -19,7 +19,7 @@ public:
 	ATank* GetControlledTank() const;
 
 	virtual void BeginPlay() override;
-
+protected:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
