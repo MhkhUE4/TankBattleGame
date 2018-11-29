@@ -11,8 +11,6 @@ class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
 class AProjectile;
-class UTankMovementComponent;
-
 UCLASS()
 class BATTLE_TANK_API ATank : public APawn
 {
@@ -31,9 +29,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
-
 private:
 	// Sets default values for this pawn's properties
 	ATank();
@@ -42,6 +37,7 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 	//UClass* ProjectileBlueprint; It Has An ALternative...
 
+	// TODO remove once firing is moved to aiming component
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
 
