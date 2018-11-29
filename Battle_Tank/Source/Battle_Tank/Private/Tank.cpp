@@ -1,8 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
-#include "TankBarrel.h"
+#include "TankMovementComponent.h"
 #include "Projectile.h"
+#include "TankTurret.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
 #include "Engine/World.h"
 
@@ -17,6 +19,7 @@ ATank::ATank()
 	// no need to protect points as added at construction
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName ("Aiming Component"));
 
+	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
