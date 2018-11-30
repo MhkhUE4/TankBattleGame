@@ -32,7 +32,6 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Aiming Comp Ticking"));
 	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) //? < || > ???
 	{
 		FiringState = EFiringState::Reloading;
@@ -78,12 +77,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 		AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
 		auto Time = GetWorld()->GetTimeSeconds();
-		//UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
 	}
 	else
 	{
 		auto Time = GetWorld()->GetTimeSeconds();
-		//UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), Time);
 	}
 	// If no solution found do nothing
 }
@@ -96,8 +93,17 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
+	// Always yaw the shortest way
 	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Rotate(DeltaRotator.Yaw);
+	if (DeltaRotator.Yaw  < 180)
+	{
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(-DeltaRotator.Yaw);
+	}
+	//FMath::Abs(DeltaRotator.Yaw)
 }
 
 void UTankAimingComponent::Fire()
