@@ -18,9 +18,10 @@ protected:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// How close the AI tank get
+	UPROPERTY(EditAnywhere, Category = "Setup") // Consider EditDefaultsOnly
+	float AcceptanceRadius = 8000;
+
 private:
 	virtual void BeginPlay() override;
-
-	// How close the AI tank get
-	float AcceptanceRadius = 3000;
 };
